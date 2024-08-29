@@ -6,9 +6,9 @@ import * as actionSchemas from './actionSchemas.js';
 import * as recordSchemas from './recordSchemas.js';
 
 export default {
-  ...infoSchemas,
-  ...timeSchemas,
-  ...entitySchemas,
-  ...actionSchemas,
-  ...recordSchemas
+	...infoSchemas,
+	...timeSchemas,
+	...entitySchemas,
+	...actionSchemas,
+	...recordSchemas,
 };

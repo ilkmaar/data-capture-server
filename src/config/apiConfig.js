@@ -1,87 +1,88 @@
 // config/apiConfig.js
-import { validateSchema } from "../middleware/validateSchema.js";
-import { translateData } from "../middleware/translateData.js";
-import insertIntoTable from "../middleware/insertIntoTable.js";
+import { validateSchema } from '../middleware/validateSchema.js';
+import { translateData } from '../middleware/translateData.js';
+import insertIntoTable from '../middleware/insertIntoTable.js';
 
-import { newDataTypes } from "./newDataConfig.js";
-import { oldDataTypes } from "./oldDataConfig.js";
+import { newDataTypes } from './types/new/index.js';
+import { oldDataTypes } from './types/old/index.js';
 
 export const getNewDataTypeConfig = (type) => newDataTypes[type];
 export const getOldDataTypeConfig = (type) => oldDataTypes[type];
 
 // Utility functions
-export const getExternalFetchConfigs = () => 
-    Object.entries(oldDataTypes).map(([type, config]) => ({
-        type,
-        url: config.externalUrl,
-        schema: config.schema
-    }));
+export const getExternalFetchConfigs = () =>
+	Object.entries(oldDataTypes).map(([type, config]) => ({
+		type,
+		url: config.externalUrl,
+		schema: config.schema,
+	}));
 
 export const getOldRouteConfigs = () =>
-    Object.entries(oldDataTypes).map(([type, config]) => {
-        const middlewares = [validateSchema(config.schema)];
-        
-        if (config.router) {
-            middlewares.push(
-                config.router,
-                async (req, res, next) => {
-                    try {
-                        const { translatedEvent, newType } = req;
-                        const newTypeConfig = getNewDataTypeConfig(newType);
+	Object.entries(oldDataTypes).map(([type, config]) => {
+		const middlewares = [validateSchema(config.schema)];
 
-                        if (!newTypeConfig) {
-                            return res.status(404).send('New type configuration not found');
-                        }
+		if (config.router) {
+			middlewares.push(config.router, async (req, res, next) => {
+				try {
+					const { translatedEvent, newType } = req;
+					const newTypeConfig = getNewDataTypeConfig(newType);
 
-                        req.body = translatedEvent;
+					if (!newTypeConfig) {
+						return res
+							.status(404)
+							.send('New type configuration not found');
+					}
 
-                        const newMiddlewares = [
-                            validateSchema(newTypeConfig.schema),
-                            insertIntoTable(newTypeConfig.table),
-                        ];
+					req.body = translatedEvent;
 
-                        for (const middleware of newMiddlewares) {
-                            await new Promise((resolve, reject) => {
-                                middleware(req, res, (err) => {
-                                    if (err) reject(err);
-                                    else resolve();
-                                });
-                            });
-                        }
-                        next();
-                    } catch (err) {
-                        next(err);
-                    }
-                }
-            );
-        } else {
-            const newType = config.newTypes[0];
-            const newTypeConfig = getNewDataTypeConfig(newType);
+					const newMiddlewares = [
+						validateSchema(newTypeConfig.schema),
+						insertIntoTable(newTypeConfig.table),
+					];
 
-            if (!newTypeConfig) {
-                throw new Error(`New type configuration not found for type: ${newType}`);
-            }
+					for (const middleware of newMiddlewares) {
+						await new Promise((resolve, reject) => {
+							middleware(req, res, (err) => {
+								if (err) reject(err);
+								else resolve();
+							});
+						});
+					}
+					next();
+				} catch (err) {
+					next(err);
+				}
+			});
+		} else {
+			const newType = config.newTypes[0];
+			const newTypeConfig = getNewDataTypeConfig(newType);
 
-            middlewares.push(
-                translateData(newTypeConfig.translator),
-                validateSchema(newTypeConfig.schema),
-                insertIntoTable(newTypeConfig.table),
-            );
-        }
+			if (!newTypeConfig) {
+				throw new Error(
+					`New type configuration not found for type: ${newType}`,
+				);
+			}
 
-        return {
-            type,
-            route: `/${type}`,
-            middlewares,
-        };
-    });
+			middlewares.push(
+				translateData(newTypeConfig.translator),
+				validateSchema(newTypeConfig.schema),
+				insertIntoTable(newTypeConfig.table),
+			);
+		}
+
+		return {
+			type,
+			route: `/${type}`,
+			middlewares,
+		};
+	});
 
 export const getNewRouteConfigs = () =>
-    Object.entries(newDataTypes).map(([type, config]) => ({
-        type,
-        route: `/${type}`,
-        middlewares: [
-            validateSchema(config.schema),
-            insertIntoTable(config.table),
-        ],
-    }));
+	Object.entries(newDataTypes).map(([type, config]) => ({
+		type,
+		route: `/${type}`,
+		middlewares: [
+			validateSchema(config.schema),
+			insertIntoTable(config.table),
+		],
+	}));
