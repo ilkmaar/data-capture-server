@@ -1,5 +1,5 @@
-import Joi from 'joi';
-import { ID_STRING_MAX } from '../../config/index.js';
+import Joi from "joi";
+import { ID_STRING_MAX } from "../../config/index.js";
 
 // Helper schemas
 const timestampSchema = Joi.date().iso();
@@ -28,7 +28,7 @@ export const playerSchema = Joi.object({
 
     // data
     player_name: Joi.string().required(),
-    
+
     // references
     world_id: idFieldSchema,
 });
@@ -46,7 +46,7 @@ export const creatureSchema = Joi.object({
     world_id: idFieldSchema,
     color_id: idFieldSchema,
     creature_type_id: idFieldSchema,
-    faction_id: idFieldSchema
+    faction_id: idFieldSchema,
 });
 
 // Resource schema
@@ -57,6 +57,8 @@ export const resourceSchema = Joi.object({
     // data
     resource_created_date: timestampSchema.required(),
     resource_quality: Joi.number().integer().min(0).max(100).required(),
+    resource_is_anomalous: Joi.number().integer().allow(0, 1).required(),
+    resource_affects_crafting: Joi.number().integer().allow(0, 1).required(),
 
     // references
     world_id: idFieldSchema,
@@ -71,6 +73,7 @@ export const itemSchema = Joi.object({
     // data
     item_created_date: timestampSchema.required(),
     item_quality: Joi.number().integer().min(0).max(100).required(),
+    item_is_anomalous: Joi.number().integer().allow(0, 1).required(),
 
     // references
     world_id: idFieldSchema,

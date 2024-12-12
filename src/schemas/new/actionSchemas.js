@@ -1,10 +1,13 @@
-import Joi from 'joi';
-import { ID_STRING_MAX } from '../../config/index.js';
+import Joi from "joi";
+import { ID_STRING_MAX } from "../../config/index.js";
 
 // Helper schemas
 const timestampSchema = Joi.date().iso();
 const idFieldSchema = Joi.string().max(ID_STRING_MAX).required();
-const idOrNullFieldSchema = Joi.string().max(ID_STRING_MAX).allow(null).required();
+const idOrNullFieldSchema = Joi.string()
+    .max(ID_STRING_MAX)
+    .allow(null)
+    .required();
 
 //
 // Actions
@@ -25,7 +28,7 @@ export const foragingActionSchema = Joi.object({
     game_time_id: idFieldSchema,
     player_id: idFieldSchema,
     patch_id: idFieldSchema,
-    resource_id: idFieldSchema
+    resource_id: idFieldSchema,
 });
 
 // Crafting action schema
@@ -44,7 +47,7 @@ export const craftingActionSchema = Joi.object({
     player_id: idFieldSchema,
     ingredient1_resource_id: idFieldSchema,
     ingredient2_resource_id: idFieldSchema,
-    item_id: idFieldSchema
+    item_id: idFieldSchema,
 });
 
 // Gifting action schema
@@ -85,7 +88,7 @@ export const patchActionSchema = Joi.object({
     game_time_id: idFieldSchema,
     player_id: idFieldSchema,
     patch_id: idFieldSchema,
-    item_id: Joi.string().allow(null)
+    item_id: Joi.string().allow(null),
 });
 
 // Creature direction action schema
@@ -102,7 +105,7 @@ export const creatureDirectionActionSchema = Joi.object({
     world_id: idFieldSchema,
     game_time_id: idFieldSchema,
     player_id: idFieldSchema,
-    creature_id: idFieldSchema
+    creature_id: idFieldSchema,
 });
 
 // Diner seating action schema
@@ -118,7 +121,7 @@ export const dinerSeatingActionSchema = Joi.object({
     world_id: idFieldSchema,
     game_time_id: idFieldSchema,
     player_id: idFieldSchema,
-    creature_id: idFieldSchema
+    creature_id: idFieldSchema,
 });
 
 // Inventory action schema
@@ -138,7 +141,7 @@ export const inventoryActionSchema = Joi.object({
     player_id: idFieldSchema,
     item_id: Joi.string().allow(null),
     resource_id: Joi.string().allow(null),
-    inventory_id: idFieldSchema
+    inventory_id: idFieldSchema,
 });
 
 // Data action schema
@@ -175,7 +178,7 @@ export const dinerReviewActionSchema = Joi.object({
     world_id: idFieldSchema,
     game_time_id: idFieldSchema,
     creature_id: idFieldSchema,
-    item_id: idFieldSchema
+    item_id: idFieldSchema,
 });
 
 // Patch tending action schema
@@ -194,5 +197,27 @@ export const patchTendingActionSchema = Joi.object({
     world_id: idFieldSchema,
     game_time_id: idFieldSchema,
     creature_id: idFieldSchema,
-    patch_id: idFieldSchema
+    patch_id: idFieldSchema,
+});
+
+export const treatmentActionSchema = Joi.object({
+    treatment_action_id: idFieldSchema,
+    fv_treatment_action_id: Joi.number().required(),
+    treatment_action_time: timestampSchema.required(),
+
+    // data
+    treatment_action_health_effect: Joi.number().required(),
+    treatment_action_mood_effect: Joi.number().required(),
+    treatment_action_social_effect: Joi.number().required(),
+    treatment_action_cured: Joi.boolean().required(),
+    treatment_action_room_id: Joi.number().integer().required(),
+    treatment_action_sickness_category: Joi.string().required(),
+    treatment_action_sickness_name: Joi.string().required(),
+
+    // references
+    world_id: idFieldSchema,
+    game_time_id: idFieldSchema,
+    player_id: idFieldSchema,
+    creature_id: idFieldSchema,
+    item_id: idFieldSchema,
 });

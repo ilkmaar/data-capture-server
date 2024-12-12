@@ -1,5 +1,5 @@
-import Joi from 'joi';
-import { ID_STRING_MAX } from '../../config/index.js';
+import Joi from "joi";
+import { ID_STRING_MAX } from "../../config/index.js";
 
 const timestampSchema = Joi.date().iso();
 const idFieldSchema = Joi.string().max(ID_STRING_MAX).required();
@@ -33,12 +33,13 @@ export const creatureStateRecordSchema = Joi.object({
     creature_state_record_time: timestampSchema.required(),
 
     // data
-    creature_state_record_health: Joi.number().min(0).max(100).required(),
-    creature_state_record_mood: Joi.number().min(0).max(100).required(),
-    creature_state_record_social: Joi.number().min(0).max(100).required(),
+    creature_state_record_health: Joi.number().required(),
+    creature_state_record_mood: Joi.number().required(),
+    creature_state_record_social: Joi.number().required(),
 
     // references
     world_id: idFieldSchema,
+    game_time_id: idFieldSchema,
     creature_id: idFieldSchema,
     area_id: idFieldSchema,
 });
@@ -46,7 +47,10 @@ export const creatureStateRecordSchema = Joi.object({
 // Creature activity record schema
 export const creatureActivityRecordSchema = Joi.object({
     creature_activity_record_id: idFieldSchema,
-    fv_creature_activity_record_id: Joi.number().integer().positive().required(),
+    fv_creature_activity_record_id: Joi.number()
+        .integer()
+        .positive()
+        .required(),
     creature_activity_record_time: timestampSchema.required(),
 
     // data
@@ -72,7 +76,10 @@ export const patchHealthRecordSchema = Joi.object({
     patch_health_record_growth_level: Joi.number().min(0).max(100).required(),
     patch_health_record_light_level: Joi.number().min(0).max(100).required(),
     patch_health_record_shadow_level: Joi.number().min(0).max(100).required(),
-    patch_health_record_stability_level: Joi.number().min(0).max(100).required(),
+    patch_health_record_stability_level: Joi.number()
+        .min(0)
+        .max(100)
+        .required(),
 
     // references
     world_id: idFieldSchema,

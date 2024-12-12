@@ -1,4 +1,4 @@
-import Joi from 'joi';
+import Joi from "joi";
 
 export const worldSchema = Joi.object({
     world_id: Joi.string().required(),
@@ -8,9 +8,10 @@ export const worldSchema = Joi.object({
 });
 
 export const playerSchema = Joi.object({
+    db_pk: Joi.number(),
     player_id: Joi.number().integer().required(),
     player_name: Joi.string().required(),
-    world_id: Joi.string().required()
+    world_id: Joi.string().required(),
 });
 
 export const creatureSchema = Joi.object({
@@ -20,7 +21,7 @@ export const creatureSchema = Joi.object({
     color_id: Joi.number().integer().required(),
     creature_type_id: Joi.number().integer().required(),
     created_date: Joi.date().iso().required(),
-    world_id: Joi.string().required()
+    world_id: Joi.string().required(),
 });
 
 export const resourceSchema = Joi.object({
@@ -29,7 +30,7 @@ export const resourceSchema = Joi.object({
     item_value: Joi.number().integer().required(),
     item_quality: Joi.number().integer().required(),
     created_date: Joi.date().iso().required(),
-    world_id: Joi.string().required()
+    world_id: Joi.string().required(),
 });
 
 export const itemSchema = Joi.object({
@@ -37,13 +38,15 @@ export const itemSchema = Joi.object({
     item_def_id: Joi.number().integer().required(),
     item_value: Joi.number().integer().required(),
     item_quality: Joi.number().integer().required(),
+    is_anomalous: Joi.number().integer().allow(0, 1).required(),
+    affects_crafting: Joi.number().integer().allow(0, 1).required(),
     created_date: Joi.date().iso().required(),
-    world_id: Joi.string().required()
+    world_id: Joi.string().required(),
 });
 
 export const inventorySchema = Joi.object({
     inventory_id: Joi.string().required(),
-    inventory_name: Joi.string().required()
+    inventory_name: Joi.string().required(),
 });
 
 export const dataTableSchema = Joi.object({
@@ -62,5 +65,5 @@ export const dataTableSchema = Joi.object({
     table_being_merged_id: Joi.string().allow(null).required(),
     table_being_merged_name: Joi.string().allow(null).required(),
     game_time_id: Joi.number().integer().required(),
-    raw_time: Joi.date().iso().required()
+    raw_time: Joi.date().iso().required(),
 });

@@ -1,5 +1,5 @@
-import Joi from 'joi';
-import { ID_STRING_MAX } from '../../config/index.js';
+import Joi from "joi";
+import { ID_STRING_MAX } from "../../config/index.js";
 
 // Helper schemas
 const externalIdSchema = Joi.string().max(255);
@@ -17,7 +17,7 @@ export const colorSchema = Joi.object({
     fv_color_id: Joi.number().integer().positive().required(),
 
     // data
-    color_name: shortTextStringSchema
+    color_name: shortTextStringSchema,
 });
 
 // Creature type schema
@@ -26,7 +26,7 @@ export const creatureTypeSchema = Joi.object({
     fv_creature_type_id: Joi.number().integer().required(),
 
     // data
-    creature_type_name: shortTextStringSchema
+    creature_type_name: shortTextStringSchema,
 });
 
 // Faction schema
@@ -35,7 +35,7 @@ export const factionSchema = Joi.object({
     fv_faction_id: Joi.number().integer().required(),
 
     // data
-    faction_name: shortTextStringSchema
+    faction_name: shortTextStringSchema,
 });
 
 // Activity type schema
@@ -47,15 +47,13 @@ export const activityTypeSchema = Joi.object({
     activity_type_name: shortTextStringSchema,
 });
 
-
-
 // Island schema
 export const islandSchema = Joi.object({
     island_id: idFieldSchema,
     fv_island_id: Joi.number().integer().required(),
 
     // data
-    island_name: shortTextStringSchema
+    island_name: shortTextStringSchema,
 });
 
 // Area schema
@@ -67,9 +65,9 @@ export const areaSchema = Joi.object({
     area_name: shortTextStringSchema,
     area_x: Joi.number().required(),
     area_y: Joi.number().required(),
-    
+
     // references
-    island_id: idFieldSchema,
+    island_id: idFieldSchema.optional(),
     activity_type_id: idFieldSchema,
 });
 
@@ -90,9 +88,6 @@ export const patchSchema = Joi.object({
     // references
     plot_id: idFieldSchema,
 });
-
-
-
 
 // Item category schema
 export const itemCategorySchema = Joi.object({

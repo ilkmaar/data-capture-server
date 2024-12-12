@@ -1,21 +1,30 @@
-import Joi from 'joi';
+import Joi from "joi";
 
 export const interactionEventSchema = Joi.object({
     interaction_event_id: Joi.number().integer().required(),
     interaction_event_type: Joi.number().integer().required(),
+    interaction_item_quality: Joi.number().integer().required(),
     game_time_id: Joi.number().integer().required(),
     raw_time: Joi.date().iso().required(),
     world_id: Joi.string().required(),
     player_id: Joi.number().integer().required(),
     creature_id: Joi.string().allow(null).required(),
-    input_items: Joi.array().items(Joi.object({
-      item_id: Joi.number().integer().required(),
-      item_def_id: Joi.number().integer().required()
-    })).required(),
-    output_items: Joi.array().items(Joi.object({
-      item_id: Joi.number().integer().required(),
-      item_def_id: Joi.number().integer().required()
-    })).required(),
+    input_items: Joi.array()
+        .items(
+            Joi.object({
+                item_id: Joi.number().integer().required(),
+                item_def_id: Joi.number().integer().required(),
+            }),
+        )
+        .required(),
+    output_items: Joi.array()
+        .items(
+            Joi.object({
+                item_id: Joi.number().integer().required(),
+                item_def_id: Joi.number().integer().required(),
+            }),
+        )
+        .required(),
     interaction_event_mood_effect: Joi.number().required(),
     interaction_event_health_effect: Joi.number().required(),
     interaction_event_social_effect: Joi.number().required(),
@@ -25,7 +34,7 @@ export const interactionEventSchema = Joi.object({
     location_id: Joi.number().integer().required(),
     patch_id: Joi.string().allow(null).required(),
     interaction_event_event_pos_x: Joi.number().required(),
-    interaction_event_event_pos_y: Joi.number().required()
+    interaction_event_event_pos_y: Joi.number().required(),
 });
 
 export const foragingActionSchema = interactionEventSchema;
@@ -39,12 +48,13 @@ export const playerItemInteractionEventSchema = Joi.object({
     player_item_interaction_type_id: Joi.number().integer().required(),
     item_id: Joi.number().integer().required(),
     hidden_item_def_id: Joi.number().integer().required(),
+    item_quality: Joi.number().integer().required(),
     inventory: Joi.string().required(),
     location_id: Joi.number().integer().required(),
     player_item_interaction_event_pos_x: Joi.number().required(),
     player_item_interaction_event_pos_y: Joi.number().required(),
     game_time_id: Joi.number().integer().required(),
-    raw_time: Joi.date().iso().required()
+    raw_time: Joi.date().iso().required(),
 });
 
 export const directCreatureEventSchema = Joi.object({
@@ -55,7 +65,7 @@ export const directCreatureEventSchema = Joi.object({
     from_location_id: Joi.number().integer().required(),
     to_location_id: Joi.number().integer().required(),
     game_time_id: Joi.number().integer().required(),
-    raw_time: Joi.date().iso().required()
+    raw_time: Joi.date().iso().required(),
 });
 
 export const dinerSeatingEventSchema = Joi.object({
@@ -66,7 +76,7 @@ export const dinerSeatingEventSchema = Joi.object({
     seat_id: Joi.number().integer().required(),
     seat_type_id: Joi.number().integer().required(),
     game_time_id: Joi.number().integer().required(),
-    raw_time: Joi.date().iso().required()
+    raw_time: Joi.date().iso().required(),
 });
 
 export const playerManipulateDataEventSchema = Joi.object({
@@ -83,7 +93,7 @@ export const playerManipulateDataEventSchema = Joi.object({
     table_being_merged_id: Joi.string().allow(null).required(),
     table_being_merged_name: Joi.string().allow(null).required(),
     game_time_id: Joi.number().integer().required(),
-    raw_time: Joi.date().iso().required()
+    raw_time: Joi.date().iso().required(),
 });
 
 export const dinerRatingEventSchema = Joi.object({
@@ -95,7 +105,7 @@ export const dinerRatingEventSchema = Joi.object({
     item_id: Joi.number().integer().required(),
     hidden_item_def_id: Joi.number().integer().required(),
     game_time_id: Joi.number().integer().required(),
-    raw_time: Joi.date().iso().required()
+    raw_time: Joi.date().iso().required(),
 });
 
 export const creatureActivityRecordSchema = Joi.object({
@@ -108,7 +118,7 @@ export const creatureActivityRecordSchema = Joi.object({
     location_id: Joi.number().integer().required(),
     creature_activity_event_health_delta: Joi.number().required(),
     creature_activity_event_mood_delta: Joi.number().required(),
-    creature_activity_event_social_delta: Joi.number().required()
+    creature_activity_event_social_delta: Joi.number().required(),
 });
 
 export const patchEventSchema = Joi.object({
@@ -127,7 +137,7 @@ export const patchEventSchema = Joi.object({
     patch_event_level_2: Joi.number().allow(null).required(),
     patch_event_level_3: Joi.number().allow(null).required(),
     game_time_id: Joi.number().integer().required(),
-    raw_time: Joi.date().iso().required()
+    raw_time: Joi.date().iso().required(),
 });
 
 export const patchTendingActionSchema = Joi.object({
@@ -146,5 +156,24 @@ export const patchTendingActionSchema = Joi.object({
     patch_event_level_2: Joi.number().allow(null).required(),
     patch_event_level_3: Joi.number().allow(null).required(),
     game_time_id: Joi.number().integer().required(),
-    raw_time: Joi.date().iso().required()
+    raw_time: Joi.date().iso().required(),
+});
+
+export const treatmentEventSchema = Joi.object({
+    treatment_event_id: Joi.number().integer().required(),
+    world_id: Joi.string().required(),
+    player_id: Joi.number().integer().required(),
+    creature_id: Joi.string().required(),
+    item_id: Joi.number().integer().required(),
+    hidden_item_def_id: Joi.number().integer().required(),
+    item_quality: Joi.number().integer().required(),
+    room_id: Joi.number().integer().required(),
+    sickness_category: Joi.number().integer().required(),
+    sickness_name: Joi.number().integer().required(),
+    cured: Joi.boolean().required(),
+    treatment_health_delta: Joi.number().required(),
+    treatment_mood_delta: Joi.number().required(),
+    treatment_social_delta: Joi.number().required(),
+    game_time_id: Joi.number().integer().required(),
+    raw_time: Joi.date().iso().required(),
 });
