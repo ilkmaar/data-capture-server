@@ -54,7 +54,7 @@ export const translateResource = async (resource, lookups = null) => {
 		{ key: 'resource_type_id', extractor: (r) => r.item_def_id },
 	];
 	return {
-		...createIdMapping('resource', resource.item_id),
+		...createIdMapping('resource', resource.item_id, resource.world_id),
 		...(await translateBase(
 			resource,
 			'items',
@@ -74,10 +74,11 @@ export const translateItem = async (item, lookups = null) => {
 		{ key: 'world_id', extractor: (i) => i.world_id },
 		{ key: 'item_type_id', extractor: (i) => i.item_def_id },
 	];
-	return {
-		...createIdMapping('item', item.item_id),
+	const result = {
+		...createIdMapping('item', item.item_id, item.world_id),
 		...(await translateBase(item, 'items', fields, references, lookups)),
 	};
+	return result;
 };
 
 export const translateInventory = (inventory) => ({

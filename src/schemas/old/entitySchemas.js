@@ -8,6 +8,7 @@ export const worldSchema = Joi.object({
 });
 
 export const playerSchema = Joi.object({
+	db_pk: Joi.number().integer().optional(),
 	player_id: Joi.number().integer().required(),
 	player_name: Joi.string().required(),
 	world_id: Joi.string().required(),
@@ -38,6 +39,7 @@ export const itemSchema = Joi.object({
 	item_value: Joi.number().integer().required(),
 	item_quality: Joi.number().integer().required(),
 	is_anomalous: Joi.number().integer().valid(0, 1).required(),
+	affects_crafting: Joi.number().integer().valid(0, 1).required(),
 	created_date: Joi.date().iso().required(),
 	world_id: Joi.string().required(),
 });

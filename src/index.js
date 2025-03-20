@@ -16,9 +16,9 @@ app.use(bodyParser.json());
 
 // Logger middleware
 app.use((req, res, next) => {
-    console.log(`${req.method} ${req.url}`);
-    logger.info(`${req.method} ${req.url}`);
-    next();
+	console.log(`${req.method} ${req.url}`);
+	logger.info(`${req.method} ${req.url}`);
+	next();
 });
 
 // Routes
@@ -30,9 +30,9 @@ app.use(errorHandler);
 
 // Only start the server if not in test mode
 if (process.env.NODE_ENV !== 'test') {
-    app.listen(port, () => {
-        console.log(`Server is running on port ${port}`);
-    });
+	app.listen(port, () => {
+		console.log(`Server is running on port ${port}`);
+	});
 }
 
 // Export the app for testing

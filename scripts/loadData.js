@@ -9,11 +9,23 @@ import { batchLookupIds } from '../src/utils/dbLookup.js';
 import batchInsertIntoSupabase from '../src/db/batchInsert.js';
 import { DATA_LOAD_ORDER } from './config.js';
 
+/**
+ * Saves translated data to Supabase database
+ * @param {string} dataType - Type of data being saved
+ * @param {Array} translatedData - Array of processed data ready for insertion
+ */
 const saveTranslatedData = async (dataType, translatedData) => {
 	await batchInsertIntoSupabase(translatedData, dataType);
 	console.log(`Saved ${translatedData.length} items of type ${dataType}.`);
 };
 
+/**
+ * Processes a batch of data for a specific route/type
+ * @param {string} dataType - Original data type
+ * @param {string} newDataType - Target data type after translation
+ * @param {Array} allData - Array of data to process
+ * @param {number} batchSize - Size of batches to process (default: 1000)
+ */
 const processRoutedDataTypeInBatches = async (
 	dataType,
 	newDataType,
@@ -42,15 +54,33 @@ const processRoutedDataTypeInBatches = async (
 	translatedData.forEach((item) => {
 		const { error, value } = schema.validate(item, { abortEarly: false });
 		if (error) {
-			console.error('Validation error:', error);
+			console.log('Error validating item: ', item);
+			console.error('Validation error for output data:', error);
 		} else {
 			validatedData.push(value);
 		}
 	});
 
+	console.log('Validated data length: ', validatedData.length);
+
+	if (validatedData.length != allData.length) {
+		console.log('Validation error for ', newDataType);
+		// find the missing items
+		const missingItems = allData.filter(
+			(item) => !validatedData.includes(item),
+		);
+		console.log('Example missing item: ', missingItems[0]);
+	}
+
 	await saveTranslatedData(newDataType, validatedData);
 };
 
+/**
+ * Processes old data type and routes it to multiple new types if needed
+ * @param {string} dataType - Type of data to process
+ * @param {Array} allData - Array of data to process
+ * @param {number} batchSize - Size of batches to process
+ */
 const processOldDataTypeInBatches = async (
 	dataType,
 	allData,
@@ -67,6 +97,11 @@ const processOldDataTypeInBatches = async (
 	}
 };
 
+/**
+ * Routes and processes events based on their type
+ * @param {string} dataType - Type of events to process
+ * @param {Array} events - Array of events to route and process
+ */
 const processRoutedEvents = async (dataType, events) => {
 	let groupedEvents = {};
 	for (const event of events) {
@@ -87,17 +122,35 @@ const processRoutedEvents = async (dataType, events) => {
 	}
 };
 
+/**
+ * Main function to process all data types in the specified order
+ * @param {Array} DATA_LOAD_ORDER - Array specifying the order of data types to process
+ */
+// src/scripts/batchDataProcessing.js
+// ... (keep all other imports and functions the same)
+
 export const processDataInOrder = async (DATA_LOAD_ORDER) => {
 	for (const dataType of DATA_LOAD_ORDER) {
 		try {
+			console.log(`Processing ${dataType}`);
 			const config = getOldDataTypeConfig(dataType);
 			const schema = config.schema;
 			let data = [];
 
 			if (config.externalUrl) {
+				console.log(`Fetching data from ${config.externalUrl}`);
 				data = await fetchPaginatedData(config.externalUrl);
+				console.log(`Fetched ${data.length} items of type ${dataType}`);
 			} else {
-				data = config.localData;
+				data = config.localData || [];
+				console.log(
+					`Processing ${data.length} local items of type ${dataType}`,
+				);
+			}
+
+			if (!data.length) {
+				console.log(`No data found for ${dataType}`);
+				continue;
 			}
 
 			// Validate data
@@ -107,11 +160,20 @@ export const processDataInOrder = async (DATA_LOAD_ORDER) => {
 					abortEarly: false,
 				});
 				if (error) {
-					console.error('Validation error:', error);
+					console.error(
+						'Validation error for input data type:',
+						dataType,
+						error,
+					);
 				} else {
 					validatedData.push(value);
 				}
 			});
+
+			if (!validatedData.length) {
+				console.log(`No valid data after validation for ${dataType}`);
+				continue;
+			}
 
 			if (
 				[
@@ -127,11 +189,13 @@ export const processDataInOrder = async (DATA_LOAD_ORDER) => {
 			}
 		} catch (error) {
 			console.error(`Error processing ${dataType}:`, error);
+			continue; // Continue with next data type on error
 		}
 	}
+	console.log('Data processing completed');
 };
 
-// Main execution
+// Main execution remains the same
 (async () => {
 	try {
 		await processDataInOrder(DATA_LOAD_ORDER);

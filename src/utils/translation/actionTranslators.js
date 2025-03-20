@@ -469,3 +469,526 @@ export const translateRequestBoardAction = async (event, lookups = null) => {
 		...translatedBase,
 	};
 };
+
+export const translateTreatmentAction = async (event, lookups = null) => {
+	const fields = [
+		{ key: 'treatment_action_time', value: (e) => e.raw_time },
+		{
+			key: 'treatment_action_health_effect',
+			value: (e) => e.treatment_health_delta,
+		},
+		{
+			key: 'treatment_action_mood_effect',
+			value: (e) => e.treatment_mood_delta,
+		},
+		{
+			key: 'treatment_action_social_effect',
+			value: (e) => e.treatment_social_delta,
+		},
+		{ key: 'treatment_action_room_number', value: (e) => e.room_id },
+		{ key: 'treatment_action_cured', value: (e) => e.cured },
+		{
+			key: 'treatment_action_sickness_category',
+			value: (e) => e.sickness_category,
+		},
+		{
+			key: 'treatment_action_sickness_name',
+			value: (e) => e.sickness_name,
+		},
+	];
+	const references = [
+		{ key: 'world_id', extractor: (e) => e.world_id },
+		{ key: 'game_time_id', extractor: (e) => e.game_time_id },
+		{ key: 'player_id', extractor: (e) => e.player_id },
+		{ key: 'creature_id', extractor: (e) => e.creature_id },
+		{ key: 'item_id', extractor: (e) => e.item_id, requiresWorld: true },
+	];
+
+	return {
+		...createIdMapping('treatment_action', event.treatment_event_id),
+		...(await translateBase(
+			event,
+			'treatment-events',
+			fields,
+			references,
+			lookups,
+		)),
+	};
+};
+
+export const translateAvatarUpdateAction = async (event, lookups = null) => {
+	const fields = [
+		{ key: 'avatar_update_action_time', value: (e) => e.raw_time },
+		{ key: 'avatar_update_action_body_type', value: (e) => e.body_type },
+		{ key: 'avatar_update_action_height', value: (e) => e.height },
+		{ key: 'avatar_update_action_face', value: (e) => e.face },
+		{ key: 'avatar_update_action_eyes', value: (e) => e.eyes },
+		{ key: 'avatar_update_action_nose', value: (e) => e.nose },
+		{ key: 'avatar_update_action_mouth', value: (e) => e.mouth },
+		{ key: 'avatar_update_action_skin_color', value: (e) => e.skin_color },
+		{ key: 'avatar_update_action_hairstyle', value: (e) => e.hairstyle },
+		{ key: 'avatar_update_action_hair_color', value: (e) => e.hair_color },
+		{ key: 'avatar_update_action_outfit', value: (e) => e.outfit },
+		{
+			key: 'avatar_update_action_outfit_color',
+			value: (e) => e.outfit_color,
+		},
+		{ key: 'avatar_update_action_glasses', value: (e) => e.glasses },
+		{ key: 'avatar_update_action_cane', value: (e) => e.cane },
+		{ key: 'avatar_update_action_prosthetic', value: (e) => e.prosthetic },
+		{
+			key: 'avatar_update_action_hearing_aid',
+			value: (e) => e.hearing_aid,
+		},
+		{
+			key: 'avatar_update_action_diabetes_patch',
+			value: (e) => e.diabetes_patch,
+		},
+		{ key: 'avatar_update_action_goggles', value: (e) => e.goggles },
+	];
+
+	const references = [
+		{ key: 'world_id', extractor: (e) => e.world_id },
+		{ key: 'game_time_id', extractor: (e) => e.game_time_id },
+		{ key: 'player_id', extractor: (e) => e.player_id },
+	];
+
+	return {
+		...createIdMapping('avatar_update_action', event.avatar_update_id),
+		...(await translateBase(
+			event,
+			'avatar-updates',
+			fields,
+			references,
+			lookups,
+		)),
+	};
+};
+
+// Need to add the following:
+// CREATURES
+// creature-interaction-events;
+// patch-measure-events;
+
+// POTIONS
+// medical-room-send-events;
+// triage-events;
+// treatment-events;
+// creature-stats-events;
+// sickness-events;
+
+// MINIGAMES
+// smashing-minigame-events;
+// rune-minigame-events;
+// slicing-minigame-events;
+// brewing-minigame-events;
+// challenge-hub-events;
+
+// PLAYERS
+// player-trade-item-events;
+
+export const translateCreatureInteractionEvent = async (
+	event,
+	lookups = null,
+) => {
+	const fields = [
+		{ key: 'creature_interaction_event_time', value: (e) => e.raw_time },
+		{
+			key: 'creature_interaction_event_health',
+			value: (e) => e.creature_interaction_event_health,
+		},
+		{
+			key: 'creature_interaction_event_mood',
+			value: (e) => e.creature_interaction_event_mood,
+		},
+		{
+			key: 'creature_interaction_event_social',
+			value: (e) => e.creature_interaction_event_social,
+		},
+	];
+
+	const references = [
+		{ key: 'world_id', extractor: (e) => e.world_id },
+		{ key: 'game_time_id', extractor: (e) => e.game_time_id },
+		{ key: 'player_id', extractor: (e) => e.player_id },
+		{ key: 'creature_id', extractor: (e) => e.creature_id },
+		{ key: 'area_id', extractor: (e) => e.location_id },
+	];
+
+	return {
+		...createIdMapping(
+			'creature_interaction_event',
+			event.creature_interaction_event_id,
+		),
+		...(await translateBase(
+			event,
+			'creature-interaction-events',
+			fields,
+			references,
+			lookups,
+		)),
+	};
+};
+
+export const translateMedicalRoomSendEvent = async (event, lookups = null) => {
+	const fields = [
+		{ key: 'medical_room_send_event_time', value: (e) => e.raw_time },
+		{
+			key: 'medical_room_send_event_room_number',
+			value: (e) => e.room_id,
+		},
+	];
+
+	const references = [
+		{ key: 'world_id', extractor: (e) => e.world_id },
+		{ key: 'game_time_id', extractor: (e) => e.game_time_id },
+		{ key: 'player_id', extractor: (e) => e.player_id },
+		{ key: 'creature_id', extractor: (e) => e.creature_id },
+	];
+
+	return {
+		...createIdMapping(
+			'medical_room_send_event',
+			event.medical_room_send_event_id,
+		),
+		...(await translateBase(
+			event,
+			'medical-room-send-events',
+			fields,
+			references,
+			lookups,
+		)),
+	};
+};
+
+export const translateTriageEvent = async (event, lookups = null) => {
+	const fields = [
+		{ key: 'triage_event_time', value: (e) => e.raw_time },
+		{
+			key: 'triage_event_sickness_category',
+			value: (e) =>
+				localLookups.lookupSicknessCategory(e.sickness_category),
+		},
+		{
+			key: 'triage_event_sickness_name',
+			value: (e) => localLookups.lookupSicknessName(e.sickness_name),
+		},
+	];
+
+	const references = [
+		{ key: 'world_id', extractor: (e) => e.world_id },
+		{ key: 'game_time_id', extractor: (e) => e.game_time_id },
+		{ key: 'player_id', extractor: (e) => e.player_id },
+		{ key: 'creature_id', extractor: (e) => e.creature_id },
+	];
+
+	return {
+		...createIdMapping('triage_event', event.triage_event_id),
+		...(await translateBase(
+			event,
+			'triage-events',
+			fields,
+			references,
+			lookups,
+		)),
+	};
+};
+
+export const translateCreatureStatsEvent = async (event, lookups = null) => {
+	const fields = [
+		{
+			key: 'creature_stats_event_health',
+			value: (e) => e.creature_stats_event_health,
+		},
+		{
+			key: 'creature_stats_event_mood',
+			value: (e) => e.creature_stats_event_mood,
+		},
+		{
+			key: 'creature_stats_event_social',
+			value: (e) => e.creature_stats_event_social,
+		},
+		{ key: 'raw_time', value: (e) => e.raw_time },
+	];
+	const references = [
+		{ key: 'world_id', extractor: (e) => e.world_id },
+		{ key: 'game_time_id', extractor: (e) => e.game_time_id },
+		{ key: 'player_id', extractor: (e) => e.player_id },
+		{ key: 'creature_id', extractor: (e) => e.creature_id },
+	];
+	return {
+		...createIdMapping(
+			'creature_stats_event',
+			event.creature_stats_event_id,
+		),
+		...(await translateBase(
+			event,
+			'creature-stats-events',
+			fields,
+			references,
+			lookups,
+		)),
+	};
+};
+
+export const translateSicknessEvent = async (event, lookups = null) => {
+	const fields = [
+		{ key: 'sickness_event_time', value: (e) => e.raw_time },
+		{
+			key: 'sickness_event_category',
+			value: (e) =>
+				localLookups.lookupSicknessCategory(e.sickness_category),
+		},
+		{
+			key: 'sickness_event_area_id',
+			keyOverride: 'area_id',
+			value: (e) => e.location_id,
+		},
+	];
+
+	const references = [
+		{ key: 'world_id', extractor: (e) => e.world_id },
+		{ key: 'game_time_id', extractor: (e) => e.game_time_id },
+		{ key: 'creature_id', extractor: (e) => e.creature_id },
+	];
+
+	return {
+		...createIdMapping('sickness_event', event.sickness_event_id),
+		...(await translateBase(
+			event,
+			'sickness-events',
+			fields,
+			references,
+			lookups,
+		)),
+	};
+};
+
+export const translatePlayerTradeItemEvent = async (event, lookups = null) => {
+	const fields = [
+		{ key: 'player_trade_item_event_time', value: (e) => e.raw_time },
+		{
+			key: 'player_trade_item_event_pos_x',
+			value: (e) => e.player_trade_item_event_pos_x,
+		},
+		{
+			key: 'player_trade_item_event_pos_y',
+			value: (e) => e.player_trade_item_event_pos_y,
+		},
+	];
+	const references = [
+		{ key: 'world_id', extractor: (e) => e.world_id },
+		{ key: 'game_time_id', extractor: (e) => e.game_time_id },
+		{ key: 'player_id', extractor: (e) => e.player_id },
+		{ key: 'receiving_player_id', extractor: (e) => e.receiving_player_id },
+		{ key: 'item_id', extractor: (e) => e.item_id },
+		{ key: 'area_id', extractor: (e) => e.location_id },
+	];
+	return {
+		...createIdMapping(
+			'player_trade_item_event',
+			event.player_trade_item_event_id,
+		),
+		...(await translateBase(
+			event,
+			'player-trade-item-events',
+			fields,
+			references,
+			lookups,
+		)),
+	};
+};
+
+export const translateSmashingMinigameEvent = async (event, lookups = null) => {
+	const fields = [
+		{ key: 'smashing_minigame_event_time', value: (e) => e.raw_time },
+		{ key: 'crafting_cancelled', value: (e) => e.crafting_cancelled },
+		{
+			key: 'average_input_item_quality',
+			value: (e) => e.average_input_item_quality,
+		},
+		{ key: 'output_item_quality', value: (e) => e.output_item_quality },
+		{ key: 'first_smash_distance', value: (e) => e.first_smash_distance },
+		{ key: 'second_smash_distance', value: (e) => e.second_smash_distance },
+		{ key: 'third_smash_distance', value: (e) => e.third_smash_distance },
+	];
+	const references = [
+		{ key: 'world_id', extractor: (e) => e.world_id },
+		{ key: 'game_time_id', extractor: (e) => e.game_time_id },
+		{ key: 'player_id', extractor: (e) => e.player_id },
+		{ key: 'crafted_item_id', extractor: (e) => e.crafted_item_id },
+		{ key: 'item_type_id', extractor: (e) => e.item_def_id },
+	];
+	return {
+		...createIdMapping(
+			'smashing_minigame_event',
+			event.smashing_minigame_event_id,
+		),
+		...(await translateBase(
+			event,
+			'smashing-minigame-events',
+			fields,
+			references,
+			lookups,
+		)),
+	};
+};
+
+export const translateRuneMinigameEvent = async (event, lookups = null) => {
+	const fields = [
+		{ key: 'rune_minigame_event_time', value: (e) => e.raw_time },
+		{ key: 'crafting_cancelled', value: (e) => e.crafting_cancelled },
+		{
+			key: 'average_input_item_quality',
+			value: (e) => e.average_input_item_quality,
+		},
+		{ key: 'grid_size', value: (e) => e.grid_size },
+		{
+			key: 'wrong_connections_tried',
+			value: (e) => e.wrong_connections_tried,
+		},
+	];
+	const references = [
+		{ key: 'world_id', extractor: (e) => e.world_id },
+		{ key: 'game_time_id', extractor: (e) => e.game_time_id },
+		{ key: 'player_id', extractor: (e) => e.player_id },
+	];
+	return {
+		...createIdMapping('rune_minigame_event', event.rune_minigame_event_id),
+		...(await translateBase(
+			event,
+			'rune-minigame-events',
+			fields,
+			references,
+			lookups,
+		)),
+	};
+};
+
+export const translateSlicingMinigameEvent = async (event, lookups = null) => {
+	const fields = [
+		{ key: 'slicing_minigame_event_time', value: (e) => e.raw_time },
+		{ key: 'crafting_cancelled', value: (e) => e.crafting_cancelled },
+		{
+			key: 'average_input_item_quality',
+			value: (e) => e.average_input_item_quality,
+		},
+		{ key: 'output_item_quality', value: (e) => e.output_item_quality },
+		{ key: 'correct_items_sliced', value: (e) => e.correct_items_sliced },
+		{ key: 'correct_items_missed', value: (e) => e.correct_items_missed },
+		{
+			key: 'incorrect_items_sliced',
+			value: (e) => e.incorrect_items_sliced,
+		},
+	];
+	const references = [
+		{ key: 'world_id', extractor: (e) => e.world_id },
+		{ key: 'game_time_id', extractor: (e) => e.game_time_id },
+		{ key: 'player_id', extractor: (e) => e.player_id },
+		{ key: 'item_id', extractor: (e) => e.crafted_item_id },
+	];
+	return {
+		...createIdMapping(
+			'slicing_minigame_event',
+			event.slicing_minigame_event_id,
+		),
+		...(await translateBase(
+			event,
+			'slicing-minigame-events',
+			fields,
+			references,
+			lookups,
+		)),
+	};
+};
+
+export const translateBrewingMinigameEvent = async (event, lookups = null) => {
+	const fields = [
+		{ key: 'brewing_minigame_event_time', value: (e) => e.raw_time },
+		{ key: 'crafting_cancelled', value: (e) => e.crafting_cancelled },
+		{
+			key: 'average_input_item_quality',
+			value: (e) => e.average_input_item_quality,
+		},
+		{ key: 'output_item_quality', value: (e) => e.output_item_quality },
+		{ key: 'target_temperature', value: (e) => e.target_temperature },
+		{ key: 'average_temperature', value: (e) => e.average_temperature },
+		{
+			key: 'temperature_difference',
+			value: (e) => e.temperature_difference,
+		},
+	];
+	const references = [
+		{ key: 'world_id', extractor: (e) => e.world_id },
+		{ key: 'game_time_id', extractor: (e) => e.game_time_id },
+		{ key: 'player_id', extractor: (e) => e.player_id },
+		{ key: 'item_id', extractor: (e) => e.crafted_item_id },
+	];
+	return {
+		...createIdMapping(
+			'brewing_minigame_event',
+			event.brewing_minigame_event_id,
+		),
+		...(await translateBase(
+			event,
+			'brewing-minigame-events',
+			fields,
+			references,
+			lookups,
+		)),
+	};
+};
+
+export const translateChallengeHubEvent = async (event, lookups = null) => {
+	const fields = [
+		{ key: 'challenge_hub_event_time', value: (e) => e.raw_time },
+		{ key: 'challenge_hub_event_event_id', value: (e) => e.event_id },
+		{
+			key: 'challenge_hub_event_challenge_name',
+			value: (e) => e.challenge_name,
+		},
+		{ key: 'challenge_hub_event_step_index', value: (e) => e.step_index },
+		{ key: 'challenge_hub_event_task_index', value: (e) => e.task_index },
+	];
+	const references = [
+		{ key: 'world_id', extractor: (e) => e.world_id },
+		{ key: 'game_time_id', extractor: (e) => e.game_time_id },
+		{ key: 'player_id', extractor: (e) => e.player_id },
+	];
+	return {
+		...createIdMapping('challenge_hub_event', event.challenge_hub_event_id),
+		...(await translateBase(
+			event,
+			'challenge-hub-events',
+			fields,
+			references,
+			lookups,
+		)),
+	};
+};
+
+export const translatePatchMeasureEvent = async (event, lookups = null) => {
+	const fields = [
+		{ key: 'patch_id', value: (e) => e.patch_id },
+		{ key: 'patch_water_value', value: (e) => e.patch_water_value },
+		{ key: 'patch_water_level', value: (e) => e.patch_water_level },
+		{ key: 'patch_sun_level', value: (e) => e.patch_sun_level },
+		{ key: 'raw_time', value: (e) => e.raw_time },
+	];
+	const references = [
+		{ key: 'world_id', extractor: (e) => e.world_id },
+		{ key: 'game_time_id', extractor: (e) => e.game_time_id },
+		{ key: 'player_id', extractor: (e) => e.player_id },
+		{ key: 'area_id', extractor: (e) => e.location_id },
+	];
+	return {
+		...createIdMapping('patch_measure_event', event.patch_measure_event_id),
+		...(await translateBase(
+			event,
+			'patch-measure-events',
+			fields,
+			references,
+			lookups,
+		)),
+	};
+};

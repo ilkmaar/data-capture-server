@@ -31,10 +31,10 @@ async function batchLookup(
 
 		const { data, error } = await query;
 
-		if (table === 'data_tables') {
-			console.log(`Looking up ${table} for items`, batch);
-			console.log('Results:', data);
-		}
+		// if (table === 'players') {
+		// 	console.log(`Looking up ${table} for items`, batch);
+		// 	console.log('Results:', data);
+		// }
 
 		if (error) {
 			console.error(`Error in batch lookup for ${table}:`, error);

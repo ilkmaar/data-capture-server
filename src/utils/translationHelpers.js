@@ -6,8 +6,8 @@ export const getIds = async (data, lookupType, lookups) => {
 };
 
 // Create ID mapping
-export const createIdMapping = (prefix, id) => ({
-	[`${prefix}_id`]: `${prefix}_${id}`,
+export const createIdMapping = (prefix, id, worldId) => ({
+	[`${prefix}_id`]: `${prefix}_${id}${worldId ? `_${worldId}` : ''}`,
 	[`fv_${prefix}_id`]: id,
 });
 
@@ -33,9 +33,21 @@ export const translateCommonFields = (
 
 		if (lookupValue !== null) {
 			const idKey = ref.keyOverride ? ref.keyOverride : ref.key;
+			if (logging) {
+				// console.log('idKey: ', idKey);
+				// console.log('lookupValue: ', lookupValue);
+				// console.log('ids: ', ids);
+			}
 			result[ref.key] = ids[idKey][lookupValue];
+			if (logging) {
+				//console.log('result[ref.key]: ', result[ref.key]);
+			}
 		}
 	});
+
+	if (logging) {
+		// console.log('result: ', result);
+	}
 
 	return result;
 };
@@ -50,7 +62,8 @@ export const translateBase = async (
 ) => {
 	let logging = false;
 	const ids = await getIds(data, lookupType, lookups);
-	if (lookupType === 'request-board-actions') {
+	if (lookupType === 'player-item-interaction-events') {
+		//console.log('ids: ', ids);
 		logging = true;
 	}
 	return translateCommonFields(data, ids, fields, references, logging);

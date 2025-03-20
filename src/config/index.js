@@ -6,8 +6,9 @@ export const EXTERNAL_URL = 'https://ilkmaar-data.fablevision-dev.com/api/';
 // supabase tables
 export const ID_STRING_MAX = 64;
 export const MAX_LOOKUP_BATCH_SIZE = process.env.MAX_LOOKUP_BATCH_SIZE || 50;
-export const MAX_INSERTION_BATCH_SIZE = 200;
-export const RETRY_LIMIT = process.env.RETRY_LIMIT || 3; // Define retry limit for transient errors
+export const MAX_INSERTION_BATCH_SIZE = 500;
+export const RETRY_LIMIT = process.env.RETRY_LIMIT || 3;
+export const MAX_PAGES = 100;
 
 export const TABLES_BY_ID_FIELD = {
 	world_id: 'worlds',

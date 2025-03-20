@@ -25,6 +25,7 @@ export const playerMoveEvent = {
 export const interactionEvent1 = {
 	interaction_event_id: 714,
 	interaction_event_type: 1,
+	interaction_item_quality: 74,
 	game_time_id: 183,
 	raw_time: '2024-06-16T01:05:02.958361Z',
 	world_id: 'ISLES_DEFAULT_GROUP_NAME',
@@ -50,44 +51,46 @@ export const interactionEvent1 = {
 };
 
 export const interactionEvent2 = {
-	interaction_event_id: 704,
+	interaction_event_id: 390,
 	interaction_event_type: 2,
-	game_time_id: 181,
-	raw_time: '2024-06-16T00:57:08.028064Z',
-	world_id: 'ISLES_DEFAULT_GROUP_NAME',
-	player_id: 9,
+	interaction_item_quality: 74,
+	game_time_id: 8,
+	raw_time: '2025-01-15T20:22:40.461193Z',
+	world_id: 'prod_Research',
+	player_id: 641234,
 	creature_id: null,
 	input_items: [
 		{
-			item_id: 573,
-			item_def_id: 2,
+			item_id: 98,
+			item_def_id: 0,
 		},
 		{
-			item_id: 339,
-			item_def_id: 7,
+			item_id: 197,
+			item_def_id: 11,
 		},
 	],
 	output_items: [
 		{
-			item_id: 617,
-			item_def_id: 22,
+			item_id: 248,
+			item_def_id: 68,
 		},
 	],
 	interaction_event_mood_effect: 0.0,
 	interaction_event_health_effect: 0.0,
 	interaction_event_social_effect: 0.0,
-	interaction_event_level_1: 3,
-	interaction_event_level_2: 3,
-	interaction_event_level_3: 3,
-	location_id: 121,
+	interaction_event_level_1: 4,
+	interaction_event_level_2: 4,
+	interaction_event_level_3: 4,
+	location_id: 9,
 	patch_id: null,
-	interaction_event_event_pos_x: 179.95,
-	interaction_event_event_pos_y: 106.77,
+	interaction_event_event_pos_x: 170.06,
+	interaction_event_event_pos_y: -132.95,
 };
 
 export const interactionEvent3 = {
 	interaction_event_id: 707,
 	interaction_event_type: 4,
+	interaction_item_quality: 74,
 	game_time_id: 182,
 	raw_time: '2024-06-16T00:58:18.109555Z',
 	world_id: 'ISLES_DEFAULT_GROUP_NAME',
@@ -113,18 +116,19 @@ export const interactionEvent3 = {
 };
 
 export const playerItemInteractionEvent = {
-	player_item_interaction_event_id: 875,
-	world_id: 'ISLES_247',
-	player_id: 506892,
-	player_item_interaction_type_id: 1,
-	item_id: 253,
-	hidden_item_def_id: 19,
-	inventory: 'Ready To Serve',
-	location_id: 121,
-	player_item_interaction_event_pos_x: 151.46,
-	player_item_interaction_event_pos_y: 109.21,
-	game_time_id: 37,
-	raw_time: '2024-06-25T14:37:59.263838Z',
+	player_item_interaction_event_id: 250,
+	world_id: 'prod_Research',
+	player_id: 641234,
+	player_item_interaction_type_id: 0,
+	item_id: 248,
+	hidden_item_def_id: 68,
+	item_quality: 74,
+	inventory: 'Potion Storage',
+	location_id: 9,
+	player_item_interaction_event_pos_x: 170.06,
+	player_item_interaction_event_pos_y: -132.95,
+	game_time_id: 8,
+	raw_time: '2025-01-15T20:22:40.411172Z',
 };
 
 export const directCreatureEvent = {
@@ -172,6 +176,7 @@ export const item1 = {
 	item_value: 3,
 	item_quality: 75,
 	is_anomalous: 0,
+	affects_crafting: 0,
 	created_date: '2024-08-19T18:05:41.020103Z',
 	world_id: 'ISLES_238',
 };
@@ -182,6 +187,7 @@ export const item2 = {
 	item_value: 7,
 	item_quality: 50,
 	is_anomalous: 1,
+	affects_crafting: 1,
 	created_date: '2024-06-01T00:04:17.151155Z',
 	world_id: 'ISLES_DEFAULT_GROUP_NAME',
 };
@@ -459,4 +465,206 @@ export const anomalyReading = {
 	anomaly_mapped: 'None',
 	game_time_id: 15,
 	raw_time: '2024-08-19T16:54:58.757502Z',
+};
+
+export const avatarUpdateEvent = {
+	avatar_update_id: 140,
+	world_id: 'prod_group3',
+	player_id: 379015,
+	body_type: 2,
+	height: 1.0,
+	face: 1,
+	eyes: 3,
+	nose: 2,
+	mouth: 2,
+	skin_color: 'light',
+	hairstyle: 14,
+	hair_color: 'darkbrown',
+	outfit: 3,
+	outfit_color: 'gray-green',
+	glasses: 1,
+	cane: 1,
+	prosthetic: 0,
+	hearing_aid: 1,
+	diabetes_patch: 0,
+	goggles: 1,
+	game_time_id: 6,
+	raw_time: '2025-01-17T16:46:36.491203Z',
+};
+
+export const creatureInteractionEvent = {
+	creature_interaction_event_id: 209,
+	world_id: 'prod_CCProd',
+	player_id: 32373,
+	creature_id: '4c7ec500-4fa4-4ec0-9b0a-c5af26babd72',
+	location_id: 112,
+	creature_interaction_event_health: 0.3265265,
+	creature_interaction_event_mood: 0.175572,
+	creature_interaction_event_social: 0.1595195,
+	game_time_id: 429,
+	raw_time: '2025-02-17T16:29:00.247934Z',
+};
+
+export const patchMeasureEvent = {
+	patch_measure_event_id: 76,
+	world_id: 'prod_LEAP2',
+	player_id: 849201,
+	patch_id: 'patch_0_Thriving Terrace',
+	location_id: 6,
+	patch_water_value: 50.0,
+	patch_water_level: 'Wet',
+	patch_sun_level: 'Part shade',
+	game_time_id: 47,
+	raw_time: '2025-02-20T18:20:02.747296Z',
+};
+
+export const medicalRoomSendEvent = {
+	medical_room_send_event_id: 122,
+	world_id: 'prod_LEAP2',
+	player_id: 237106,
+	creature_id: '8c790b58-a461-4f91-9cdb-cd6e76f6ad3d',
+	room_id: 2,
+	game_time_id: 72,
+	raw_time: '2025-02-26T22:01:47.319391Z',
+};
+
+export const triageEvent = {
+	triage_event_id: 106,
+	world_id: 'prod_LEAP2',
+	player_id: 793061,
+	creature_id: '1a00c8a4-0abd-4697-b9bc-4ef3ac9cb602',
+	sickness_category: 0,
+	sickness_name: 0,
+	game_time_id: 72,
+	raw_time: '2025-02-26T21:58:35.078182Z',
+};
+
+export const treatmentEvent = {
+	treatment_event_id: 94,
+	world_id: 'prod_LEAP2',
+	player_id: 350987,
+	creature_id: 'ea3025c8-7e3b-474a-9726-43264a4123f2',
+	item_id: 1247,
+	hidden_item_def_id: 65,
+	item_quality: 57,
+	room_id: 0,
+	sickness_category: 3,
+	sickness_name: 5,
+	cured: false,
+	treatment_health_delta: -0.05,
+	treatment_mood_delta: 0.157,
+	treatment_social_delta: 0.2,
+	game_time_id: 71,
+	raw_time: '2025-02-26T21:48:38.102915Z',
+};
+
+export const playerTradeItemEvent = {
+	player_trade_item_event_id: 35,
+	world_id: 'prod_LEAP2',
+	player_id: 416205,
+	receiving_player_id: 350987,
+	item_id: 895,
+	hidden_item_def_id: 6,
+	location_id: 9,
+	player_trade_item_event_pos_x: 185.81,
+	player_trade_item_event_pos_y: -121.42,
+	game_time_id: 66,
+	raw_time: '2025-02-26T21:10:22.065793Z',
+};
+
+// Record
+export const sicknessEvent = {
+	sickness_event_id: 429,
+	world_id: 'prod_LEAP2',
+	creature_id: '5fd17480-97b3-47cc-a103-eb972bca357c',
+	sickness_category: 2,
+	location_id: 80,
+	game_time_id: 0,
+	raw_time: '2025-03-05T16:14:57.600529Z',
+};
+
+export const smashingMinigameEvent = {
+	world_id: 'prod_LEAP2',
+	player_id: 416205,
+	game_time_id: 76,
+	raw_time: '2025-03-04T21:53:19.197978Z',
+	crafting_cancelled: false,
+	average_input_item_quality: 74,
+	output_item_quality: 87,
+	crafted_item_id: 1275,
+	hidden_item_def_id: 50,
+	smashing_minigame_event_id: 28,
+	first_smash_distance: 1.53205109,
+	second_smash_distance: 24.5529251,
+	third_smash_distance: 16.2407074,
+};
+
+export const runeMinigameEvent = {
+	world_id: 'prod_LEAP2',
+	player_id: 907384,
+	game_time_id: 17,
+	raw_time: '2025-02-12T21:57:29.173447Z',
+	crafting_cancelled: false,
+	average_input_item_quality: 44,
+	output_item_quality: null,
+	crafted_item_id: null,
+	hidden_item_def_id: null,
+	rune_minigame_event_id: 7,
+	grid_size: 4,
+	wrong_connections_tried: 6,
+};
+
+export const slicingMinigameEvent = {
+	world_id: 'prod_LEAP2',
+	player_id: 762034,
+	game_time_id: 75,
+	raw_time: '2025-02-27T17:34:44.990951Z',
+	crafting_cancelled: false,
+	average_input_item_quality: 49,
+	output_item_quality: 74,
+	crafted_item_id: 1273,
+	hidden_item_def_id: 29,
+	slicing_minigame_event_id: 116,
+	correct_items_sliced: 15,
+	correct_items_missed: 0,
+	incorrect_items_sliced: 0,
+};
+
+export const brewingMinigameEvent = {
+	world_id: 'prod_LEAP2',
+	player_id: 350987,
+	game_time_id: 71,
+	raw_time: '2025-02-26T21:47:16.035023Z',
+	crafting_cancelled: false,
+	average_input_item_quality: 60,
+	output_item_quality: 57,
+	crafted_item_id: 1247,
+	hidden_item_def_id: 65,
+	brewing_minigame_event_id: 159,
+	target_temperature: 360.0,
+	average_temperature: 5932.243,
+	temperature_difference: 63.000618,
+};
+
+export const challengeHubEvent = {
+	challenge_hub_event_id: 647,
+	world_id: 'prod_CCProd',
+	player_id: 32373,
+	event_id: 'complete-task',
+	challenge_name: 'data-journal',
+	step_index: 2,
+	task_index: 1,
+	game_time_id: 431,
+	raw_time: '2025-02-17T16:52:06.265556Z',
+};
+
+export const creatureStatsEvent = {
+	creature_stats_event_id: 49590,
+	world_id: 'prod_CCProd',
+	creature_id: '76e7c5a7-3324-4c96-a5ac-af7a0e8d6c3c',
+	creature_stats_event_health: 0.546708941,
+	creature_stats_event_mood: 0.262136221,
+	creature_stats_event_social: 0.292812347,
+	game_time_id: 432,
+	raw_time: '2025-02-17T16:55:39.238211Z',
 };

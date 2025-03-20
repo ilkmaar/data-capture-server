@@ -1,54 +1,36 @@
-// Define tables or groups of tables to apply policies to
+// TODO: Add
+
+// CREATURES
+// creature-interaction-events;
+// patch-measure-events;
+
+// POTIONS
+// medical-room-send-events;
+// triage-events;
+// treatment-events;
+// creature-stats-events;
+// sickness-events;
+
+// MINIGAMES
+// smashing-minigame-events;
+// rune-minigame-events;
+// slicing-minigame-events;
+// brewing-minigame-events;
+// challenge-hub-events;
+
+// PLAYERS
+// player-trade-item-events;
+
 export const DATA_LOAD_ORDER = [
-	// time
-	'days',
-	'time-of-days',
-	'seasons',
-	'game-times',
+	// Comment out other types for testing
+	// 'days',
+	// 'time-of-days',
+	// 'seasons',
+	// 'game-times',
+	// etc.
 
-	// info
-	'colors',
-	'creature-types',
-	'factions',
-	'islands',
-	'activity-types',
-	'locations',
-	'plots',
-	'patches',
-	'resource-categories',
-	'resource-types',
-	'item-categories',
-	'item-varieties',
-	'item-definitions',
-	'inventories',
-
-	// entities
-	'worlds',
-	'players',
-	'creatures',
-	'items',
-	'data-tables',
-	'request-board-items',
-
-	// actions
-	'interaction-events',
-	'player-item-interaction-events',
-	'direct-creature-events',
-	'diner-rating-events',
-	'diner-seating-events',
-	'patches-events',
-	'player-manipulate-data-events',
-	'request-board-actions',
-	'anomaly-readings',
-
-	// records
-	'weather-events',
-	'patches-healths',
-	'player-move-events',
-	'creature-move-events',
-	'creature-activity-events',
-	'personal-reputations',
-	'imbalance-records',
+	// Only load treatment events for testing
+	'treatment-events',
 ];
 
 export const ALL_TABLES = [];
